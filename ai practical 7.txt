@@ -1,0 +1,35 @@
+practical - 7  A* search algorithm on a weighted graph using a heuristic function
+
+
+import heapq
+
+graph = {
+    'A': [('B', 1), ('C', 4)],
+    'B': [('D', 2)],
+    'C': [('D', 1)],
+    'D': []
+}
+
+h = {'A': 3, 'B': 2, 'C': 1, 'D': 0}
+
+start = 'A'
+goal = 'D'
+
+queue = [(h[start], 0, start, [start])]
+
+while queue:
+    f, cost, node, path = heapq.heappop(queue)
+
+    if node == goal:
+        print("Path:", path)
+        print("Cost:", cost)
+        break
+
+    for neighbour, weight in graph[node]:
+        new_cost = cost + weight
+        heapq.heappush(queue, (new_cost + h[neighbour],
+                               new_cost, neighbour,
+                               path + [neighbour]))
+
+
+
